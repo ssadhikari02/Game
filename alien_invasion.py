@@ -20,6 +20,7 @@ class AlienInvasion:
         
         self.ship = Ship(self)
         
+        
     def run_game(self):
 
             """Start the main loop for the game"""
@@ -27,6 +28,7 @@ class AlienInvasion:
                 self._check_events()
                 self.ship.update()
                 self._update_screen()
+        
                 
     def _check_events(self):
         """Respond to keypresses and mouse events."""
@@ -34,21 +36,39 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-           
             elif event.type == pygame.KEYDOWN:
-                 # Move the ship to the right.
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = True
-                # Move the ship to the left.
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = True
-      
+                self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = False
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = False        
+                self._check_keyup_events(event)
+        
 
+    def _check_keydown_events(self, event):
+        """Respond to keypresses"""
+         # Move the ship to the right.
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        # Move the ship to the left.
+        if event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        # Move the ship upwards.
+        if event.key == pygame.K_UP:
+            self.ship.moving_up = True
+        # Move the ship downwards.
+        if event.key == pygame.K_DOWN:
+            self.ship.moving_down = True
+    
+    
+    def _check_keyup_events(self, event):
+        """Respond to key releases"""
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        if event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+        if event.key == pygame.K_UP:
+            self.ship.moving_up = False
+        if event.key == pygame.K_DOWN:
+            self.ship.moving_down = False
+   
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
 
@@ -57,6 +77,7 @@ class AlienInvasion:
                         
         # Make the most recently drawn screen visible
         pygame.display.flip()
+   
                     
 if __name__ == '__main__':
 # Make a game instance, and run the game.
